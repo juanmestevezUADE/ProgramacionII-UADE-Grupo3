@@ -33,8 +33,8 @@ public class SimpleLinkedList<E> implements SImpleList<E> {
 			head = newNode;
 			tail = newNode;
 		} else {
-			tail = newNode.prev;
 			tail.next = newNode;
+			newNode.prev = tail;
 			tail = newNode;
 		}
 		size++;
@@ -76,7 +76,7 @@ public class SimpleLinkedList<E> implements SImpleList<E> {
 	public boolean remove(Object object) {
 		// TODO Auto-generated method stub
 		Node current = head;
-		while(current.next != null) {
+		while(current != null) {
 			if(current.element.equals(object)) {
 				removeAndReconnect(current);
 				return true;
@@ -102,7 +102,7 @@ public class SimpleLinkedList<E> implements SImpleList<E> {
 		
 		Node current = head;
 		
-		while(current.next != null) {
+		while(current != null) {
 			if(current.element.equals(object)) {
 				return true;
 			}
@@ -140,9 +140,14 @@ public class SimpleLinkedList<E> implements SImpleList<E> {
 	}
 	
 	private void validateIndex(int index) {
-        if (index < 0 || index >= size) {
-            throw new IndexOutOfBoundsException("Index fuera de rango");
-        }
+        try {
+			if (index < 0 || index >= size) {
+				throw new IndexOutOfBoundsException("Index fuera de rango");
+			}
+		} catch (IndexOutOfBoundsException e) {
+			System.out.println(e.getMessage());
+			throw e; // Re-throw the exception to be handled by the caller
+		}
     }
 	
 	private Node getNodeByIndex(int index) {
@@ -160,7 +165,7 @@ public class SimpleLinkedList<E> implements SImpleList<E> {
 			 }
 		 }else {
 			 current = tail;
-			 for(int i = size; i > index; i--) {
+			 for(int i = size - 1; i > index; i--) {
 				 current = current.prev;
 			 }
 		 }

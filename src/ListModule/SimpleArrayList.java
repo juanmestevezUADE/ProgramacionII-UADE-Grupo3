@@ -110,6 +110,7 @@ public class SimpleArrayList<E> implements SImpleList<E> {
 	@Override
 	public E get(int index) {
 		// TODO Auto-generated method stub
+		validateIndex(index);
 		return elements[index];
 	}
 
