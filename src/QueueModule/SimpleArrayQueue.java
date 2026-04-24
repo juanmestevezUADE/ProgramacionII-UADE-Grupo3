@@ -3,29 +3,23 @@ package QueueModule;
 public class SimpleArrayQueue<E> implements SimpleQueue<E> {
     
     private E[] array;
-    private int front; // Índice del primer elemento
-    private int rear;  // Índice donde se insertará el próximo elemento
-    private int size;  // Cantidad actual de elementos
+    private int size;
     private static final int DEFAULT_CAPACITY = 10;
 
     @SuppressWarnings("unchecked")
     public SimpleArrayQueue() {
         this.array = (E[]) new Object[DEFAULT_CAPACITY];
-        this.front = 0;
-        this.rear = 0;
         this.size = 0;
     }
 
-    // Método auxiliar para agrandar el arreglo si se llena
     @SuppressWarnings("unchecked")
     private void resize() {
-        E[] newArray = (E[]) new Object[array.length * 2];
+        int newCapacity = (size == array.length) ? array.length * 2 : array.length;
+        E[] newArray = (E[]) new Object[newCapacity];
         for (int i = 0; i < size; i++) {
-            newArray[i] = array[(front + i) % array.length];
+            newArray[i] = array[i];
         }
         array = newArray;
-        front = 0;
-        rear = size;
     }
 
     @Override
@@ -33,19 +27,20 @@ public class SimpleArrayQueue<E> implements SimpleQueue<E> {
         if (size == array.length) {
             resize();
         }
-        array[rear] = element;
-        rear = (rear + 1) % array.length;
+        array[size] = element;
         size++;
     }
 
     @Override
     public E dequeue() {
         if (isEmpty()) {
-            return null; // O podrías lanzar una excepción como IllegalStateException
+            return null;
         }
-        E element = array[front];
-        array[front] = null; // Ayuda al Garbage Collector
-        front = (front + 1) % array.length;
+        E element = array[0];
+        array[0] = null;
+        for (int i = 0; i < size - 1; i++) {
+            array[i] = array[i + 1];
+        }
         size--;
         return element;
     }
@@ -55,7 +50,7 @@ public class SimpleArrayQueue<E> implements SimpleQueue<E> {
         if (isEmpty()) {
             return null;
         }
-        return array[front];
+        return array[0];
     }
 
     @Override
@@ -63,8 +58,6 @@ public class SimpleArrayQueue<E> implements SimpleQueue<E> {
         @SuppressWarnings("unchecked")
         E[] newArray = (E[]) new Object[DEFAULT_CAPACITY];
         array = newArray;
-        front = 0;
-        rear = 0;
         size = 0;
     }
 
