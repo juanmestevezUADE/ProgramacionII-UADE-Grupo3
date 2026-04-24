@@ -116,9 +116,12 @@ public class QueueExercise extends Exercise {
 
             System.out.print("Do you want to dequeue an element? (y/n): ");
             String input = scanner.nextLine();
-            if (!input.equalsIgnoreCase("y")) {
-                break;
-            }
+            while(!input.equals("n") && !input.equals("y")) {
+                    System.out.println("\nPlease enter a valid value.");
+                    System.out.println("\nDo you want to dequeue an element? (y/n): ");
+                    input = scanner.nextLine();
+                }
+                if(input.equals("n")) break;
 
             String element = queue.dequeue();
             System.out.println("Dequeued element: " + element);
