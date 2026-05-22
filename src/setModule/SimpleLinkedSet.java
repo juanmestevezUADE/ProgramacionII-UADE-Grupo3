@@ -26,13 +26,12 @@ public class SimpleLinkedSet<E> implements SimpleSet<E> {
 
     @Override
     public boolean add(E element) {
-        try{
-            if(contains(element)) {
+        try {
+            if (contains(element)) {
                 return false; // No se permiten duplicados
-            }
-            else {
+            } else {
                 Node newNode = new Node(element);
-                if(isEmpty()) {
+                if (isEmpty()) {
                     head = newNode;
                     tail = newNode;
                 } else {
@@ -52,18 +51,18 @@ public class SimpleLinkedSet<E> implements SimpleSet<E> {
 
     @Override
     public boolean remove(Object object) {
-        try{
+        try {
             Node current = head;
-        boolean found = false;
-        while (current != null && !found) {
-            if (current.element.equals(object)) {
-                removeAndReconnect(current);
-                found = true;
-            } else {
-                current = current.next;
+            boolean found = false;
+            while (current != null && !found) {
+                if (current.element.equals(object)) {
+                    removeAndReconnect(current);
+                    found = true;
+                } else {
+                    current = current.next;
+                }
             }
-        }
-        return found;
+            return found;
         } catch (Exception e) {
             System.out.println("Element could not be removed");
             // Si contains no está implementado, no podemos encontrar el elemento
@@ -73,7 +72,7 @@ public class SimpleLinkedSet<E> implements SimpleSet<E> {
 
     @Override
     public boolean contains(Object object) {
-        try{    
+        try {
             Node current = head;
             while (current != null) {
                 if (current.element.equals(object)) {
@@ -126,87 +125,72 @@ public class SimpleLinkedSet<E> implements SimpleSet<E> {
 
     @Override
     public SimpleSet<E> unionWith(SimpleSet<E> other) {
-        try{
-            SimpleSet<E> unionSet = new SimpleLinkedSet<>();
-            Node current = head;
-            while (current != null) {
-                unionSet.add(current.element);
-                current = current.next;
-            }
-            for (E element : other.toArray()) {
-                unionSet.add(element);
-            }
-            return unionSet;
-        } catch (Exception e) {
-            System.out.println("Union could not be performed");
-            // Si contains no está implementado, no podemos realizar la unión correctamente
+        SimpleSet<E> unionSet = new SimpleLinkedSet<>();
+        Node current = head;
+        while (current != null) {
+            unionSet.add(current.element);
+            current = current.next;
         }
-        return null;
+        for (E element : other.toArray()) {
+            unionSet.add(element);
+        }
+        return unionSet;
+
     }
 
     @Override
     public SimpleSet<E> intersectionWith(SimpleSet<E> other) {
-        try{
-            SimpleSet<E> intersectionSet = new SimpleLinkedSet<>();
-            Node current = head;
-            while (current != null) {
-                if (other.contains(current.element)) {
-                    intersectionSet.add(current.element);
-                }
-                current = current.next;
+
+        SimpleSet<E> intersectionSet = new SimpleLinkedSet<>();
+        Node current = head;
+        while (current != null) {
+            if (other.contains(current.element)) {
+                intersectionSet.add(current.element);
             }
-            return intersectionSet;
+            current = current.next;
         }
-        catch(Exception e){
-            System.out.println("Intersection could not be performed");
-        }
-        return null;
+        return intersectionSet;
+
     }
 
     @Override
     public SimpleSet<E> differenceWith(SimpleSet<E> other) {
-        try{
-            SimpleSet<E> differenceSet = new SimpleLinkedSet<>();
-            Node current = head;
-            while(current != null){
-                if(!other.contains(current.element))
-                    differenceSet.add(current.element);
-                current = current.next;
-            }
-            return differenceSet;
+        SimpleSet<E> differenceSet = new SimpleLinkedSet<>();
+        Node current = head;
+        while (current != null) {
+            if (!other.contains(current.element))
+                differenceSet.add(current.element);
+            current = current.next;
         }
-        catch(Exception e){
-            System.out.println("Difference could not be performed");
-        }
-        return null;
+        return differenceSet;
     }
-    
+
     private void removeAndReconnect(Node toRemove) {
-		
-		//Caso 1: es el unico elemento
-		if(toRemove == head && toRemove == tail) {
-			head = null;
-			tail = null;
-		}
-		//caso 2: es la cabeza
-		else if(toRemove == head) {
-			toRemove.next.prev = null;
-			head = toRemove.next;
-			
-		}
-		//caso 3: es la cola
-		else if(toRemove == tail) {
-			tail = toRemove.prev;
-			tail.next = null;
-		}
-		//caso 4: esta en el medio
-		else {
-			toRemove.next.prev = toRemove.prev;
-			toRemove.prev.next = toRemove.next;
-		}
-		toRemove.next = null;
-		toRemove.prev = null;
-		size--;
-	}
+
+        // Caso 1: es el unico elemento
+        if (toRemove == head && toRemove == tail) {
+            head = null;
+            tail = null;
+        }
+        // caso 2: es la cabeza
+        else if (toRemove == head) {
+            toRemove.next.prev = null;
+            head = toRemove.next;
+
+        }
+        // caso 3: es la cola
+        else if (toRemove == tail) {
+            tail = toRemove.prev;
+            tail.next = null;
+        }
+        // caso 4: esta en el medio
+        else {
+            toRemove.next.prev = toRemove.prev;
+            toRemove.prev.next = toRemove.next;
+        }
+        toRemove.next = null;
+        toRemove.prev = null;
+        size--;
+    }
 
 }

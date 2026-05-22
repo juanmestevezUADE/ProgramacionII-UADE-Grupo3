@@ -1,11 +1,10 @@
 package setModule;
 
-
 public class SimpleArraySet<E> implements SimpleSet<E> {
 
     private E[] elements;
-	private static final int DEFAULT_CAPACITY = 4;
-	private int size;
+    private static final int DEFAULT_CAPACITY = 4;
+    private int size;
 
     @SuppressWarnings("unchecked")
     public SimpleArraySet() {
@@ -18,8 +17,7 @@ public class SimpleArraySet<E> implements SimpleSet<E> {
         try {
             if (contains(element)) {
                 return false; // No se permiten duplicados
-            }
-            else {
+            } else {
                 resize();
                 elements[size] = element;
                 size++;
@@ -67,12 +65,12 @@ public class SimpleArraySet<E> implements SimpleSet<E> {
         return false;
     }
 
-   @SuppressWarnings("unchecked")
-	@Override
-	public void clear() {
-		elements = (E[]) new Object[DEFAULT_CAPACITY];
-		size = 0;
-	}
+    @SuppressWarnings("unchecked")
+    @Override
+    public void clear() {
+        elements = (E[]) new Object[DEFAULT_CAPACITY];
+        size = 0;
+    }
 
     @Override
     public boolean isEmpty() {
@@ -85,71 +83,59 @@ public class SimpleArraySet<E> implements SimpleSet<E> {
     }
 
     @Override
+    @SuppressWarnings("unchecked")
     public E[] toArray() {
-        return elements;
+    E[] result = (E[]) new Object[size];
+    for (int i = 0; i < size; i++) {
+        result[i] = elements[i];
     }
+    return result;
+}
 
     @Override
     public SimpleSet<E> unionWith(SimpleSet<E> other) {
-        try {
-            SimpleSet<E> unionSet = new SimpleArraySet<>();
-            for (int i = 0; i < size; i++) {
-                unionSet.add(elements[i]);
-            }
-            for (E element : other.toArray()) {
-                unionSet.add(element);
-            }
-            return unionSet;
-        } catch (Exception e) {
-            System.out.println("Union operation could not be performed");
-            // Si toArray no está implementado, no podemos realizar la unión
+        SimpleSet<E> unionSet = new SimpleArraySet<>();
+        for (int i = 0; i < size; i++) {
+            unionSet.add(elements[i]);
         }
-        return null;
+        for (E element : other.toArray()) {
+            unionSet.add(element);
+        }
+        return unionSet;
     }
 
     @Override
     public SimpleSet<E> intersectionWith(SimpleSet<E> other) {
-        try{
-            SimpleArraySet<E> intersectionSet = new SimpleArraySet<>();
-            for (int i = 0; i < size; i++) {
-                if (other.contains(elements[i])) {
-                    intersectionSet.add(elements[i]);
-                }
+
+        SimpleArraySet<E> intersectionSet = new SimpleArraySet<>();
+        for (int i = 0; i < size; i++) {
+            if (other.contains(elements[i])) {
+                intersectionSet.add(elements[i]);
             }
-            return intersectionSet;
         }
-        catch(Exception e) {
-            System.out.println("Intersection operation could not be performed");
-            // Si toArray no está implementado, no podemos realizar la intersección 
-        }
-        return null;
+        return intersectionSet;
     }
 
     @Override
     public SimpleSet<E> differenceWith(SimpleSet<E> other) {
-        try {
-            SimpleArraySet<E> differenceSet = new SimpleArraySet<>();
-            for (int i = 0; i < size; i++) {
-                if (!other.contains(elements[i])) {
-                    differenceSet.add(elements[i]);
-                }
+
+        SimpleArraySet<E> differenceSet = new SimpleArraySet<>();
+        for (int i = 0; i < size; i++) {
+            if (!other.contains(elements[i])) {
+                differenceSet.add(elements[i]);
             }
-            return differenceSet;
-        } catch (Exception e) {
-            System.out.println("Difference operation could not be performed");
-            // Si toArray no está implementado, no podemos realizar la diferencia
         }
-        return null;
+        return differenceSet;
     }
 
     @SuppressWarnings("unchecked")
-	private void resize() {
-		if(size == elements.length) {
-		    E[] newElements = (E[]) new Object[elements.length * 2];
-		    for(int i = 0; i < size; i++) {
-		        newElements[i] = elements[i];
-		    }
-		    elements = newElements;
-		}
-	}
+    private void resize() {
+        if (size == elements.length) {
+            E[] newElements = (E[]) new Object[elements.length * 2];
+            for (int i = 0; i < size; i++) {
+                newElements[i] = elements[i];
+            }
+            elements = newElements;
+        }
+    }
 }

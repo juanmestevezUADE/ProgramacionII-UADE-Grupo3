@@ -5,6 +5,8 @@ import java.util.Scanner;
 import ListModule.ListExercise;
 import stackModule.SimpleStackExercise;
 import QueueModule.QueueExercise;
+import setModule.SetExercise;
+
 //Esto importa el paquete para leer datos del teclado 
 
 public class MainProgram {
@@ -40,7 +42,8 @@ public class MainProgram {
 				"\n1: Test Exercise" +
 				"\n2: List Exercise" +
 				"\n3: Stack Exercise" + 
-				"\n4: Queue Exercise");
+				"\n4: Queue Exercise" +
+				"\n5: Set Exercise");
 		
 		
 		
@@ -62,6 +65,9 @@ public class MainProgram {
 			break;
 		case "4":
 			exercise = new QueueExercise(scanner);
+			break;
+		case "5":
+			exercise = new SetExercise(scanner);
 			break;
 		default:
 			System.out.println("\n Invalid input, try again");
