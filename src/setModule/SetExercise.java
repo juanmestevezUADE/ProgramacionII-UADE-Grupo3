@@ -124,6 +124,7 @@ public class SetExercise extends Exercise {
                             } else {
                                 currentPhase = 7; // B - A
                             }
+                            break;
                         case "mm": currentPhase = 10; break;
                         default:
                             System.out.println("Invalid choice. Please enter 'a', 'b', 'u', 'i' or 'd'.");
@@ -250,9 +251,13 @@ public class SetExercise extends Exercise {
         try {
             SimpleSet<String> unionSet = setA.unionWith(setB);
             System.out.println("\nUnion of Set A and Set B:");
-            for (String element : unionSet.toArray()) {
-                System.out.println(element);
+            String unionSetPrint = "";
+            Object [] unionSetarray = unionSet.toArray();
+            for (int i = 0; i < unionSet.size(); i++) {
+                unionSetPrint += unionSetarray[i];
+                if(i < unionSet.size() - 1) unionSetPrint += ", ";
             }
+            System.out.println(unionSetPrint);
         } catch (Exception e) {
             System.out.println("Union operation could not be performed: " + e.getMessage());
             // Si toArray no está implementado, no podemos mostrar la unión
@@ -264,9 +269,13 @@ public class SetExercise extends Exercise {
         try {
             SimpleSet<String> intersectionSet = setA.intersectionWith(setB);
             System.out.println("\nIntersection of Set A and Set B:");
-            for(int i = 0; i < intersectionSet.size(); i++) {
-                System.out.println(intersectionSet.toArray()[i]);
+            String intersectionSetPrint = "";
+            Object [] intersectionSetarray = intersectionSet.toArray();
+            for (int i = 0; i < intersectionSet.size(); i++) {
+                intersectionSetPrint += intersectionSetarray[i];
+                if(i < intersectionSet.size() - 1) intersectionSetPrint += ", ";
             }
+            System.out.println(intersectionSetPrint);
         } catch (Exception e) {
             System.out.println("Intersection operation could not be performed");
             // Si toArray no está implementado, no podemos mostrar la intersección
@@ -279,9 +288,13 @@ public class SetExercise extends Exercise {
         try {
             SimpleSet<String> differenceSet = set1.differenceWith(set2);
             System.out.println("\nDifference of Set " + (set1 == setA ? "A" : "B") + " - Set " + (set2 == setA ? "A" : "B") + ":");
-            for (String element : differenceSet.toArray()) {
-                System.out.println(element);
+            String differenceSetPrint = "";
+            Object [] differenceSetarray = differenceSet.toArray();
+            for (int i = 0; i < differenceSet.size(); i++) {
+                differenceSetPrint += differenceSetarray[i];
+                if(i < differenceSet.size() - 1) differenceSetPrint += ", ";
             }
+            System.out.println(differenceSetPrint);
         } catch (Exception e) {
             System.out.println("Difference operation could not be performed");
         }

@@ -193,4 +193,15 @@ public class SimpleLinkedSet<E> implements SimpleSet<E> {
         size--;
     }
 
+    public E get(int index){
+        if (index < 0 || index >= size) {
+            throw new IndexOutOfBoundsException("Index: " + index + ", Size: " + size);
+        }
+        Node current = head;
+        for (int i = 0; i < index; i++) {
+            current = current.next;
+        }
+        return current.element;
+    }
+
 }

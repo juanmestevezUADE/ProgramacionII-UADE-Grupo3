@@ -138,4 +138,6 @@ public class SimpleArraySet<E> implements SimpleSet<E> {
             elements = newElements;
         }
     }
+
 }
+
