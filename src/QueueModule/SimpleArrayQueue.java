@@ -14,7 +14,7 @@ public class SimpleArrayQueue<E> implements SimpleQueue<E> {
 
     @SuppressWarnings("unchecked")
     private void resize() {
-        int newCapacity = (size == array.length) ? array.length * 2 : array.length;
+        int newCapacity = array.length * 2;
         E[] newArray = (E[]) new Object[newCapacity];
         for (int i = 0; i < size; i++) {
             newArray[i] = array[i];

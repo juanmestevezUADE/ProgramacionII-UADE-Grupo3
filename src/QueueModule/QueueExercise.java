@@ -80,31 +80,58 @@ public class QueueExercise extends Exercise {
 
     private void menuLogic() {
         System.out.println("\nWhat operation do you want to perform?");
-        System.out.println("1. Enqueue");
-        System.out.println("2. Dequeue");
-        System.out.println("3. Peek");
-        System.out.println("4. Clear");
-        System.out.println("5. Exit");
+        System.out.println("e: Enqueue");
+        System.out.println("d: Dequeue");
+        System.out.println("p: Peek");
+        System.out.println("c: Clear");
+        System.out.println("mm: Main Menu");
         System.out.print("Option: ");
 
-        String input = scanner.nextLine();
-        try {
-            currentPhase = Integer.parseInt(input.trim());
-        } catch (NumberFormatException e) {
-            currentPhase = -1;
+        String input = scanner.nextLine().toLowerCase();
+        switch (input) {
+            case "e":
+                currentPhase = 1;
+                break;
+            case "d":
+                currentPhase = 2;
+                break;
+            case "p":
+                currentPhase = 3;
+                break;
+            case "c":
+                currentPhase = 4;
+                break;
+            case "mm":
+                currentPhase = 5;
+                break;
+            default:
+                System.out.println("Invalid option.");
+                currentPhase = 0;
+                break;
         }
     }
 
     private void doEnqueue() {
-        while (true) {
-            System.out.print("Enter the element to enqueue (or leave empty to go back): ");
+        try {
+            while (true) {
+            System.out.print("Enter the element to enqueue: ");
             String input = scanner.nextLine();
-            if (input.trim().isEmpty()) {
-                break;
-            }
             queue.enqueue(input);
             System.out.println("Element enqueued.");
+            System.out.println("\nKeep adding? (y/n): ");
+
+                String remain = scanner.nextLine().toLowerCase();
+                while (!remain.equals("n") && !remain.equals("y")) {
+                    System.out.println("\nPlease enter a valid value.");
+                    System.out.println("\nKeep adding? (y/n): ");
+                    remain = scanner.nextLine().toLowerCase();
+                }
+                if (remain.equals("n")) break;
+            }
+        } catch (Exception e) {
+            System.out.println("Error: " + e.getMessage());
         }
+        currentPhase = 0;
     }
 
     private void doDequeue() {
@@ -115,11 +142,11 @@ public class QueueExercise extends Exercise {
             }
 
             System.out.print("Do you want to dequeue an element? (y/n): ");
-            String input = scanner.nextLine();
+            String input = scanner.nextLine().toLowerCase();
             while(!input.equals("n") && !input.equals("y")) {
                     System.out.println("\nPlease enter a valid value.");
                     System.out.println("\nDo you want to dequeue an element? (y/n): ");
-                    input = scanner.nextLine();
+                    input = scanner.nextLine().toLowerCase();
                 }
                 if(input.equals("n")) break;
 
