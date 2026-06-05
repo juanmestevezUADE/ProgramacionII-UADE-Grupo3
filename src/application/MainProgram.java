@@ -6,14 +6,18 @@ import ListModule.ListExercise;
 import stackModule.SimpleStackExercise;
 import QueueModule.QueueExercise;
 import setModule.SetExercise;
+import dictionaryModule.DictionaryExercise;
 
 //Esto importa el paquete para leer datos del teclado 
 
 public class MainProgram {
 	public boolean running = true;
-	
+	public int loginTries = 0;
+	public dictionaryModule.SimpleDictionary<String, String> loginDictionary = null;
+	public dictionaryModule.SimpleDictionary<String, String> blockedAccounts = null;
+
 	private Exercise exercise;
-	
+
 	public static void main(String[] args) {
 		new MainProgram().run();
 
@@ -43,7 +47,9 @@ public class MainProgram {
 				"\n2: List Exercise" +
 				"\n3: Stack Exercise" + 
 				"\n4: Queue Exercise" +
-				"\n5: Set Exercise");
+				"\n5: Set Exercise" +
+				"\n6: Priority Queue Exercise" +
+				"\n7: Dictionary Exercise");
 		
 		
 		
@@ -69,12 +75,13 @@ public class MainProgram {
 		case "5":
 			exercise = new SetExercise(scanner);
 			break;
+		case "7":
+			exercise = new DictionaryExercise(scanner, this);
+			break;
 		default:
 			System.out.println("\n Invalid input, try again");
 			selectExercise(scanner);
 			break;
 		}
-		
 	}
-
 }
