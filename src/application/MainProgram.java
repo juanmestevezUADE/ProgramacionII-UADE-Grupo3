@@ -6,6 +6,7 @@ import ListModule.ListExercise;
 import stackModule.SimpleStackExercise;
 import QueueModule.QueueExercise;
 import setModule.SetExercise;
+import priorityqueueModule.PriorityqueueExercise;
 import dictionaryModule.DictionaryExercise;
 
 //Esto importa el paquete para leer datos del teclado 
@@ -74,6 +75,9 @@ public class MainProgram {
 			break;
 		case "5":
 			exercise = new SetExercise(scanner);
+			break;
+		case "6":
+			exercise = new PriorityqueueExercise(scanner);
 			break;
 		case "7":
 			exercise = new DictionaryExercise(scanner, this);
