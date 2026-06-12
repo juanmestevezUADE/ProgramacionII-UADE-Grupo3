@@ -138,4 +138,15 @@ public class BST<E extends Comparable<E>> {
         
         return result;
     }
+
+    public int height() {
+        return heightRecursive(root);
+    }
+    
+    private int heightRecursive(TreeNode<E> current) {
+        if(current == null) return -1; //La altura de un árbol vacío es -1
+        int leftHeight = heightRecursive(current.left); //Altura del subárbol izquierdo 
+        int rightHeight = heightRecursive(current.right); //Altura del subárbol derecho
+        return 1 + Math.max(leftHeight, rightHeight); //La altura del nodo actual es 1 + la altura máxima de sus hijos7
+    }
 }
