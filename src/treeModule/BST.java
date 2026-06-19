@@ -13,7 +13,7 @@ public class BST<E extends Comparable<E>> {
         root = insertRecursive(root, value);
     }
 
-    private TreeNode<E> insertRecursive(TreeNode<E> current, E value){
+    protected TreeNode<E> insertRecursive(TreeNode<E> current, E value){
         if(current == null) {
             size++;
             return new TreeNode<>(value);
@@ -32,7 +32,7 @@ public class BST<E extends Comparable<E>> {
         root = removeRecursive(root, value);
     }
 
-    private TreeNode<E> removeRecursive(TreeNode<E> current, E value){
+    protected TreeNode<E> removeRecursive(TreeNode<E> current, E value){
         if(current == null) return null; //Valor no encontrado, retornar null
 
         int comparison = value.compareTo(current.value);
@@ -59,7 +59,7 @@ public class BST<E extends Comparable<E>> {
         return current;
     }
 
-    private TreeNode<E> findSmallest(TreeNode<E> current){
+    protected TreeNode<E> findSmallest(TreeNode<E> current){
         while(current.left != null) {
             current = current.left; //El nodo más pequeño siempre estará en el extremo izquierdo
         }
@@ -143,7 +143,7 @@ public class BST<E extends Comparable<E>> {
         return heightRecursive(root);
     }
     
-    private int heightRecursive(TreeNode<E> current) {
+    protected int heightRecursive(TreeNode<E> current) {
         if(current == null) return -1; //La altura de un árbol vacío es -1
         int leftHeight = heightRecursive(current.left); //Altura del subárbol izquierdo 
         int rightHeight = heightRecursive(current.right); //Altura del subárbol derecho
