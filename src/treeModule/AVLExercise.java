@@ -86,10 +86,9 @@ public class AVLExercise extends Exercise{
             System.out.println("Score entry inserted successfully!");
         } catch (NumberFormatException e) {
             System.out.println("Invalid input. Please enter valid numbers for enemies and time.");
-        } catch(NullPointerException e) {
-            System.out.println("Input cannot be null" + e.getMessage());
-        }
-         catch (Exception e) {
+        } catch (NullPointerException | IllegalArgumentException e) {
+            System.out.println("Invalid input: " + e.getMessage());
+        } catch (Exception e) {
             System.out.println(e.getMessage());
         }
     }

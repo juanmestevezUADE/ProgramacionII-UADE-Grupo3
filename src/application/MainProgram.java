@@ -9,6 +9,7 @@ import setModule.SetExercise;
 import priorityqueueModule.PriorityqueueExercise;
 import dictionaryModule.DictionaryExercise;
 import treeModule.BSTExercise;
+import treeModule.AVLExercise;
 
 //Esto importa el paquete para leer datos del teclado 
 
@@ -52,7 +53,8 @@ public class MainProgram {
 				"\n5: Set Exercise" +
 				"\n6: Priority Queue Exercise" +
 				"\n7: Dictionary Exercise" +
-				"\n8: BST Exercise");
+				"\n8: BST Exercise" +
+				"\n9: AVL Exercise");
 		
 		
 		
@@ -86,6 +88,9 @@ public class MainProgram {
 			break;
 		case "8":
 			exercise = new BSTExercise(scanner);
+			break;
+		case "9":
+			exercise = new AVLExercise(scanner);
 			break;
 		default:
 			System.out.println("\n Invalid input, try again");

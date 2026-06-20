@@ -1,5 +1,7 @@
 package dictionaryModule;
 
+import ListModule.SImpleList;
+import ListModule.SimpleArrayList;
 public class SimpleArrayDictionary<K, V> implements SimpleDictionary<K, V> {
 
     private K[] keys;
@@ -99,27 +101,26 @@ public class SimpleArrayDictionary<K, V> implements SimpleDictionary<K, V> {
     }
 
     @Override
-    public K[] keys() {
+    public SImpleList<K> keys() {
         if (size == 0) {
             return null;
         }
-        @SuppressWarnings("unchecked")
-        K[] result = (K[]) new Object[size];
+        SImpleList<K> result = new SimpleArrayList<>(size);
         for (int i = 0; i < size; i++) {
-            result[i] = keys[i];
+            result.add(keys[i]);
         }
         return result;
     }
 
     @Override
-    public V[] values() {
+    public SImpleList<V> values() {
         if (size == 0) {
             return null;
         }
-        @SuppressWarnings("unchecked")
-        V[] result = (V[]) new Object[size];
+
+        SImpleList<V> result = new SimpleArrayList<V>(size);
         for (int i = 0; i < size; i++) {
-            result[i] = values[i];
+            result.add(values[i]);
         }
         return result;
     }

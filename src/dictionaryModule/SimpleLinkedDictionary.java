@@ -1,5 +1,8 @@
 package dictionaryModule;
 
+import ListModule.SImpleList;
+import ListModule.SimpleArrayList;
+
 public class SimpleLinkedDictionary<K,V> implements SimpleDictionary<K,V> {
 
     private class Node {
@@ -127,26 +130,23 @@ public class SimpleLinkedDictionary<K,V> implements SimpleDictionary<K,V> {
     }
 
     @Override
-    public K[] keys() {
-        @SuppressWarnings("unchecked")
-        K[] result = (K[]) new Object[size];
+    public SImpleList<K> keys() {
+        SImpleList<K> result = new SimpleArrayList<K>(size);
         Node current = head;
-        int i = 0;
         while (current != null) {
-            result[i++] = current.key;
+            result.add(current.key);
             current = current.next;
         }
         return result;
     }
 
     @Override
-    public V[] values() {
-        @SuppressWarnings("unchecked")
-        V[] result = (V[]) new Object[size];
+    public SImpleList<V> values() {
+        SImpleList<V> result = new SimpleArrayList<V>(size);
         Node current = head;
-        int i = 0;
+
         while (current != null) {
-            result[i++] = current.value;
+            result.add(current.value);
             current = current.next;
         }
         return result;

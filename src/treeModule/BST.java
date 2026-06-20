@@ -10,6 +10,7 @@ public class BST<E extends Comparable<E>> {
     int size = 0;
 
     public void insert(E value){
+        if(value == null) throw new IllegalArgumentException("Value cannot be null");
         root = insertRecursive(root, value);
     }
 
@@ -42,6 +43,7 @@ public class BST<E extends Comparable<E>> {
             current.right = removeRecursive(current.right, value);
         } else { //Valor encontrado, eliminar el nodo
             if(current.left == null && current.right == null) { //Caso 1: nodo sin hijos
+                size--;
                 return null;
             } else if(current.left == null) { //Caso 2: nodo con un hijo derecho
                 size--;
