@@ -1,7 +1,10 @@
 package setModule;
 
+// Implementación de conjunto usando una lista doblemente enlazada.
+// No permite duplicados: antes de agregar siempre verifica si el elemento ya existe.
 public class SimpleLinkedSet<E> implements SimpleSet<E> {
 
+    // Nodo interno: guarda el elemento y punteros al anterior y siguiente
     private class Node {
         E element;
         Node next;
@@ -14,8 +17,8 @@ public class SimpleLinkedSet<E> implements SimpleSet<E> {
         }
     }
 
-    private Node head; // primer nodo
-    private Node tail; // último nodo
+    private Node head; // primer nodo del conjunto
+    private Node tail; // último nodo del conjunto
     private int size;
 
     public SimpleLinkedSet() {
@@ -24,11 +27,12 @@ public class SimpleLinkedSet<E> implements SimpleSet<E> {
         size = 0;
     }
 
+    // Agrega el elemento al final solo si no existe ya en el conjunto
     @Override
     public boolean add(E element) {
         try {
             if (contains(element)) {
-                return false; // No se permiten duplicados
+                return false; // no se permiten duplicados
             } else {
                 Node newNode = new Node(element);
                 if (isEmpty()) {
@@ -44,11 +48,11 @@ public class SimpleLinkedSet<E> implements SimpleSet<E> {
             }
         } catch (Exception e) {
             System.out.println("Element could not be added");
-            // Si contains no está implementado, asumimos que no hay duplicados
         }
         return false;
     }
 
+    // Busca el objeto y elimina el nodo que lo contiene
     @Override
     public boolean remove(Object object) {
         try {
@@ -65,11 +69,11 @@ public class SimpleLinkedSet<E> implements SimpleSet<E> {
             return found;
         } catch (Exception e) {
             System.out.println("Element could not be removed");
-            // Si contains no está implementado, no podemos encontrar el elemento
         }
         return false;
     }
 
+    // Recorre la lista buscando el objeto dado
     @Override
     public boolean contains(Object object) {
         try {
@@ -83,14 +87,13 @@ public class SimpleLinkedSet<E> implements SimpleSet<E> {
             return false;
         } catch (Exception e) {
             System.out.println("Element could not be checked for existence");
-            // Si contains no está implementado, asumimos que el elemento no existe
         }
         return false;
     }
 
+    // Desconecta todos los nodos
     @Override
     public void clear() {
-        // TODO Auto-generated method stub
         head = null;
         tail = null;
         size = 0;
@@ -98,16 +101,15 @@ public class SimpleLinkedSet<E> implements SimpleSet<E> {
 
     @Override
     public boolean isEmpty() {
-        // TODO Auto-generated method stub
         return size == 0;
     }
 
     @Override
     public int size() {
-        // TODO Auto-generated method stub
         return size;
     }
 
+    // Copia los elementos a un arreglo recorriendo la lista de head a tail
     @SuppressWarnings("unchecked")
     @Override
     public E[] toArray() {
@@ -120,9 +122,9 @@ public class SimpleLinkedSet<E> implements SimpleSet<E> {
             index++;
         }
         return array;
-
     }
 
+    // Devuelve un nuevo conjunto con todos los elementos de ambos (A ∪ B)
     @Override
     public SimpleSet<E> unionWith(SimpleSet<E> other) {
         SimpleSet<E> unionSet = new SimpleLinkedSet<>();
@@ -132,15 +134,14 @@ public class SimpleLinkedSet<E> implements SimpleSet<E> {
             current = current.next;
         }
         for (E element : other.toArray()) {
-            unionSet.add(element);
+            unionSet.add(element); // add ignora duplicados automáticamente
         }
         return unionSet;
-
     }
 
+    // Devuelve un nuevo conjunto con los elementos que están en ambos (A ∩ B)
     @Override
     public SimpleSet<E> intersectionWith(SimpleSet<E> other) {
-
         SimpleSet<E> intersectionSet = new SimpleLinkedSet<>();
         Node current = head;
         while (current != null) {
@@ -150,9 +151,9 @@ public class SimpleLinkedSet<E> implements SimpleSet<E> {
             current = current.next;
         }
         return intersectionSet;
-
     }
 
+    // Devuelve un nuevo conjunto con los elementos de este que NO están en 'other' (A - B)
     @Override
     public SimpleSet<E> differenceWith(SimpleSet<E> other) {
         SimpleSet<E> differenceSet = new SimpleLinkedSet<>();
@@ -165,26 +166,22 @@ public class SimpleLinkedSet<E> implements SimpleSet<E> {
         return differenceSet;
     }
 
+    // Elimina un nodo y reconecta los adyacentes. Maneja 4 casos: único, cabeza, cola, medio.
     private void removeAndReconnect(Node toRemove) {
-
-        // Caso 1: es el unico elemento
         if (toRemove == head && toRemove == tail) {
+            // Caso 1: único elemento
             head = null;
             tail = null;
-        }
-        // caso 2: es la cabeza
-        else if (toRemove == head) {
+        } else if (toRemove == head) {
+            // Caso 2: eliminar la cabeza
             toRemove.next.prev = null;
             head = toRemove.next;
-
-        }
-        // caso 3: es la cola
-        else if (toRemove == tail) {
+        } else if (toRemove == tail) {
+            // Caso 3: eliminar la cola
             tail = toRemove.prev;
             tail.next = null;
-        }
-        // caso 4: esta en el medio
-        else {
+        } else {
+            // Caso 4: nodo en el medio
             toRemove.next.prev = toRemove.prev;
             toRemove.prev.next = toRemove.next;
         }
@@ -193,7 +190,8 @@ public class SimpleLinkedSet<E> implements SimpleSet<E> {
         size--;
     }
 
-    public E get(int index){
+    // Devuelve el elemento en la posición indicada (recorre desde head)
+    public E get(int index) {
         if (index < 0 || index >= size) {
             throw new IndexOutOfBoundsException("Index: " + index + ", Size: " + size);
         }
@@ -203,5 +201,4 @@ public class SimpleLinkedSet<E> implements SimpleSet<E> {
         }
         return current.element;
     }
-
 }

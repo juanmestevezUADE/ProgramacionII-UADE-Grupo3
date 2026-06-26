@@ -6,6 +6,9 @@ import ListModule.SImpleList;
 
 import java.util.Scanner; 
 
+// Ejercicio de scoreboard usando un AVL de ScoreEntry.
+// Igual que BSTExercise pero usa AVL, que garantiza que el árbol siempre esté balanceado.
+// Al iniciar carga datos de prueba. Permite insertar nuevas entradas y mostrarlas en orden.
 public class AVLExercise extends Exercise{
 
     public AVLExercise(Scanner scnr) {

@@ -6,6 +6,9 @@ import ListModule.SImpleList;
 
 import java.util.Scanner; 
 
+// Ejercicio de scoreboard usando un BST de ScoreEntry.
+// Al iniciar carga datos de prueba. Permite insertar nuevas entradas y mostrarlas en orden.
+// El BST ordena las entradas por puntaje (mayor primero) gracias al compareTo de ScoreEntry.
 public class BSTExercise extends Exercise{
 
     public BSTExercise(Scanner scnr) {

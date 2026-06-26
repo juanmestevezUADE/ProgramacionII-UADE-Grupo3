@@ -1,8 +1,11 @@
 package QueueModule;
 
+// Implementación de cola usando una lista simplemente enlazada.
+// El frente de la cola es head, el final es tail.
+// enqueue agrega al tail, dequeue extrae del head.
 public class SimpleLinkedQueue<E> implements SimpleQueue<E> {
 
-    // Clase interna para los nodos
+    // Nodo interno: guarda el dato y el puntero al siguiente
     private static class Node<E> {
         E data;
         Node<E> next;
@@ -13,8 +16,8 @@ public class SimpleLinkedQueue<E> implements SimpleQueue<E> {
         }
     }
 
-    private Node<E> head;
-    private Node<E> tail;
+    private Node<E> head; // frente de la cola (próximo a salir)
+    private Node<E> tail; // final de la cola (último en entrar)
     private int size;
 
     public SimpleLinkedQueue() {
@@ -23,6 +26,7 @@ public class SimpleLinkedQueue<E> implements SimpleQueue<E> {
         this.size = 0;
     }
 
+    // Agrega un nuevo nodo al final de la cola
     @Override
     public void enqueue(E element) {
         Node<E> newNode = new Node<>(element);
@@ -36,6 +40,7 @@ public class SimpleLinkedQueue<E> implements SimpleQueue<E> {
         size++;
     }
 
+    // Elimina y devuelve el nodo del frente (head)
     @Override
     public E dequeue() {
         if (isEmpty()) {
@@ -44,13 +49,14 @@ public class SimpleLinkedQueue<E> implements SimpleQueue<E> {
         E element = head.data;
         head = head.next;
         size--;
-        
+
         if (isEmpty()) {
-            tail = null; // Si la cola quedó vacía, limpiamos el tail
+            tail = null; // si la cola quedó vacía, limpiar también el tail
         }
         return element;
     }
 
+    // Devuelve el elemento del frente sin eliminarlo
     @Override
     public E peek() {
         if (isEmpty()) {
@@ -59,6 +65,7 @@ public class SimpleLinkedQueue<E> implements SimpleQueue<E> {
         return head.data;
     }
 
+    // Desconecta todos los nodos
     @Override
     public void clear() {
         head = null;

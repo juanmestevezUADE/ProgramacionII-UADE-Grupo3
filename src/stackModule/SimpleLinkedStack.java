@@ -1,5 +1,8 @@
 package stackModule;
 
+// Implementación de pila usando una lista doblemente enlazada.
+// El tope de la pila es siempre el último nodo (tail).
+// Push agrega al final, pop elimina del final.
 public class SimpleLinkedStack<E> implements SimpleStack<E> {
 
     @SuppressWarnings("unused")
@@ -16,17 +19,17 @@ public class SimpleLinkedStack<E> implements SimpleStack<E> {
     }
 
     private int size;
-    private Node head;
-    private Node tail;
+    private Node head; // primer nodo (fondo de la pila)
+    private Node tail; // último nodo (tope de la pila)
 
     public SimpleLinkedStack() {
         this.head = null;
         this.tail = null;
     }
 
+    // Agrega un nodo al final (tope de la pila)
     @Override
     public void push(E item) {
-        // TODO Auto-generated method stub
         Node newNode = new Node(item);
         if (size == 0) {
             head = newNode;
@@ -39,14 +42,15 @@ public class SimpleLinkedStack<E> implements SimpleStack<E> {
         size++;
     }
 
+    // Elimina y devuelve el nodo del tope (tail)
     @Override
     public E pop() {
-        // TODO Auto-generated method stub
         if (size == 0) {
             throw new RuntimeException("Stack is empty");
         }
         E item = tail.element;
-        if (head == tail){
+        if (head == tail) {
+            // Único elemento: la pila queda vacía
             head = null;
             tail = null;
         } else {
@@ -57,9 +61,9 @@ public class SimpleLinkedStack<E> implements SimpleStack<E> {
         return item;
     }
 
+    // Devuelve el elemento del tope sin eliminarlo
     @Override
     public E peek() {
-        // TODO Auto-generated method stub
         if (size == 0) {
             throw new RuntimeException("Stack is empty");
         }
@@ -68,13 +72,12 @@ public class SimpleLinkedStack<E> implements SimpleStack<E> {
 
     @Override
     public int size() {
-        // TODO Auto-generated method stub
         return size;
     }
 
+    // Desconecta todos los nodos
     @Override
     public void clear() {
-        // TODO Auto-generated method stub
         size = 0;
         head = null;
         tail = null;
@@ -82,8 +85,6 @@ public class SimpleLinkedStack<E> implements SimpleStack<E> {
 
     @Override
     public boolean isEmpty() {
-        // TODO Auto-generated method stub
         return size == 0;
     }
-
 }

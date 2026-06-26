@@ -2,6 +2,7 @@ package application;
 
 import java.util.Scanner;
 
+// Ejercicio de prueba básico. Solo muestra un mensaje de bienvenida y permite volver al menú.
 public class TestExercise extends Exercise {
 
 	public TestExercise(Scanner scnr) { super(scnr); }

@@ -1,5 +1,9 @@
 package priorityqueueModule;
 
+// Implementación de cola de prioridad (max-heap) usando dos arreglos paralelos:
+// uno para los elementos y otro para sus prioridades.
+// Los elementos se mantienen ordenados de mayor a menor prioridad al insertar,
+// por lo que dequeue() siempre saca el de mayor prioridad en O(1).
 public class SimpleArrayPriorityqueue<E> implements SimplePriorityqueue<E> {
 
     private E[] array;
@@ -14,6 +18,7 @@ public class SimpleArrayPriorityqueue<E> implements SimplePriorityqueue<E> {
         this.size = 0;
     }
 
+    // Si los arreglos están llenos, los duplica en capacidad copiando los datos
     @SuppressWarnings("unchecked")
     private void resize() {
         if (size == array.length) {
@@ -29,8 +34,10 @@ public class SimpleArrayPriorityqueue<E> implements SimplePriorityqueue<E> {
         }
     }
 
+    // Inserta el elemento en la posición correcta para mantener el orden descendente de prioridades.
+    // Desplaza los elementos de menor prioridad hacia la derecha para hacer lugar.
     @Override
-    public void enqueue(E element, int priority ) {
+    public void enqueue(E element, int priority) {
         resize();
         int insertIndex = size;
         for (int i = size; i > 0 && priorities[i - 1] < priority; i--) {
@@ -43,6 +50,8 @@ public class SimpleArrayPriorityqueue<E> implements SimplePriorityqueue<E> {
         size++;
     }
 
+    // Elimina y devuelve el elemento de mayor prioridad (posición 0).
+    // Desplaza todos los demás una posición a la izquierda.
     @Override
     public E dequeue() {
         if (isEmpty()) {
@@ -59,6 +68,7 @@ public class SimpleArrayPriorityqueue<E> implements SimplePriorityqueue<E> {
         return element;
     }
 
+    // Devuelve el elemento de mayor prioridad sin eliminarlo
     @Override
     public E peek() {
         if (isEmpty()) {
@@ -67,6 +77,7 @@ public class SimpleArrayPriorityqueue<E> implements SimplePriorityqueue<E> {
         return array[0];
     }
 
+    // Reinicia la cola con arreglos vacíos de capacidad por defecto
     @Override
     public void clear() {
         @SuppressWarnings("unchecked")
@@ -76,6 +87,7 @@ public class SimpleArrayPriorityqueue<E> implements SimplePriorityqueue<E> {
         size = 0;
     }
 
+    // Devuelve la prioridad más alta (la del elemento en posición 0)
     public int getHighestPriority() {
         if (isEmpty()) {
             throw new IllegalStateException("Priority queue is empty");
@@ -93,4 +105,3 @@ public class SimpleArrayPriorityqueue<E> implements SimplePriorityqueue<E> {
         return size == 0;
     }
 }
-

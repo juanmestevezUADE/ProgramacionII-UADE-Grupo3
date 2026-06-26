@@ -2,6 +2,10 @@ package dictionaryModule;
 
 import ListModule.SImpleList;
 import ListModule.SimpleArrayList;
+
+// Implementación de diccionario usando dos arreglos paralelos: uno para claves y otro para valores.
+// keys[i] y values[i] siempre corresponden al mismo par clave-valor.
+// Al eliminar, reemplaza la entrada con la última para evitar desplazamientos.
 public class SimpleArrayDictionary<K, V> implements SimpleDictionary<K, V> {
 
     private K[] keys;
@@ -16,6 +20,8 @@ public class SimpleArrayDictionary<K, V> implements SimpleDictionary<K, V> {
         size = 0;
     }
 
+    // Si la clave existe, actualiza el valor y devuelve el anterior.
+    // Si no existe, agrega el par al final y devuelve null.
     @Override
     public V put(K key, V value) {
         try {
@@ -41,21 +47,22 @@ public class SimpleArrayDictionary<K, V> implements SimpleDictionary<K, V> {
         return null;
     }
 
+    // Elimina la entrada con la clave dada reemplazándola con la última entrada.
+    // Esto evita tener que desplazar todos los elementos siguientes.
     @Override
     public boolean remove(K key) {
         try {
-           if(containsKey(key)){
+            if (containsKey(key)) {
                 int index = indexOfKey(key);
-                keys[index] = keys[size - 1]; // Reemplaza la clave a eliminar con la última clave
-                values[index] = values[size - 1]; // Reemplaza el valor a eliminar con el último valor
-                keys[size - 1] = null; // Elimina la referencia a la última clave
-                values[size - 1] = null; // Elimina la referencia al último valor
+                keys[index] = keys[size - 1];     // llenar el hueco con la última clave
+                values[index] = values[size - 1];  // llenar el hueco con el último valor
+                keys[size - 1] = null;
+                values[size - 1] = null;
                 size--;
                 return true;
             } else {
-                return false; // Clave no encontrada
-           } 
-           
+                return false;
+            }
         } catch (NullPointerException e) {
             System.out.println("Neither Key cannot be null");
         } catch (Exception e) {
@@ -64,24 +71,26 @@ public class SimpleArrayDictionary<K, V> implements SimpleDictionary<K, V> {
         return false;
     }
 
+    // Recorre el arreglo de claves buscando la clave dada
     @Override
     public boolean containsKey(K key) {
-        try{
+        try {
             for (int i = 0; i < size; i++) {
                 if (keys[i].equals(key)) {
                     return true;
                 }
             }
             return false;
-        }catch(NullPointerException e){
+        } catch (NullPointerException e) {
             System.out.println("Key cannot be null");
             return false;
-        }catch(Exception e){
+        } catch (Exception e) {
             System.out.println("Key could not be checked for existence");
         }
         return false;
     }
 
+    // Busca la clave y devuelve el valor asociado, o null si no existe
     @Override
     public V get(K key) {
         try {
@@ -100,6 +109,7 @@ public class SimpleArrayDictionary<K, V> implements SimpleDictionary<K, V> {
         return null;
     }
 
+    // Copia todas las claves a una nueva lista y la devuelve
     @Override
     public SImpleList<K> keys() {
         if (size == 0) {
@@ -112,12 +122,12 @@ public class SimpleArrayDictionary<K, V> implements SimpleDictionary<K, V> {
         return result;
     }
 
+    // Copia todos los valores a una nueva lista y la devuelve
     @Override
     public SImpleList<V> values() {
         if (size == 0) {
             return null;
         }
-
         SImpleList<V> result = new SimpleArrayList<V>(size);
         for (int i = 0; i < size; i++) {
             result.add(values[i]);
@@ -135,6 +145,7 @@ public class SimpleArrayDictionary<K, V> implements SimpleDictionary<K, V> {
         return size == 0;
     }
 
+    // Reinicia el diccionario con arreglos vacíos de capacidad por defecto
     @SuppressWarnings("unchecked")
     @Override
     public void clear() {
@@ -143,6 +154,7 @@ public class SimpleArrayDictionary<K, V> implements SimpleDictionary<K, V> {
         size = 0;
     }
 
+    // Si los arreglos están llenos, los duplica en capacidad copiando los datos
     @SuppressWarnings("unchecked")
     private void resize() {
         if (size == keys.length) {
@@ -158,6 +170,7 @@ public class SimpleArrayDictionary<K, V> implements SimpleDictionary<K, V> {
         }
     }
 
+    // Devuelve el índice de la clave en el arreglo, o -1 si no existe
     private int indexOfKey(K key) {
         for (int i = 0; i < size; i++) {
             if (keys[i].equals(key)) {

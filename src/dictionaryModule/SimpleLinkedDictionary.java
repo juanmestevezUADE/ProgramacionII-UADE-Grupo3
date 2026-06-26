@@ -3,8 +3,11 @@ package dictionaryModule;
 import ListModule.SImpleList;
 import ListModule.SimpleArrayList;
 
-public class SimpleLinkedDictionary<K,V> implements SimpleDictionary<K,V> {
+// Implementación de diccionario usando una lista doblemente enlazada.
+// Cada nodo guarda un par clave-valor y punteros al anterior y siguiente.
+public class SimpleLinkedDictionary<K, V> implements SimpleDictionary<K, V> {
 
+    // Nodo interno: guarda la clave, el valor y los punteros de la lista doble
     private class Node {
         K key;
         V value;
@@ -29,10 +32,13 @@ public class SimpleLinkedDictionary<K,V> implements SimpleDictionary<K,V> {
         size = 0;
     }
 
+    // Si la clave ya existe, actualiza su valor y devuelve el anterior.
+    // Si no existe, agrega un nuevo nodo al final y devuelve null.
     @Override
     public V put(K key, V value) {
-        try{
-            if(containsKey(key)){
+        try {
+            if (containsKey(key)) {
+                // Buscar el nodo con esa clave y actualizar su valor
                 Node current = head;
                 while (current != null) {
                     if (current.key.equals(key)) {
@@ -43,6 +49,7 @@ public class SimpleLinkedDictionary<K,V> implements SimpleDictionary<K,V> {
                     current = current.next;
                 }
             } else {
+                // Clave nueva: agregar al final de la lista
                 Node newNode = new Node(key, value);
                 if (isEmpty()) {
                     head = newNode;
@@ -63,19 +70,24 @@ public class SimpleLinkedDictionary<K,V> implements SimpleDictionary<K,V> {
         return null;
     }
 
+    // Busca el nodo con la clave dada y lo elimina reconectando los adyacentes
     @Override
     public boolean remove(K key) {
-        try{
-            if(containsKey(key)){
+        try {
+            if (containsKey(key)) {
                 Node current = head;
-                while(current != null) {
+                while (current != null) {
                     if (current.key.equals(key)) {
-                        if(current.prev == null){
+                        if (current.prev == null) {
+                            // Es la cabeza: el nuevo head es el siguiente
                             head = current.next;
-                        }
-                        else if(current.next == null){
+                            if (head != null) head.prev = null;
+                        } else if (current.next == null) {
+                            // Es la cola: el nuevo tail es el anterior
                             tail = current.prev;
-                        }else{
+                            tail.next = null;
+                        } else {
+                            // Nodo del medio: reconectar anterior con siguiente
                             current.prev.next = current.next;
                             current.next.prev = current.prev;
                         }
@@ -85,7 +97,7 @@ public class SimpleLinkedDictionary<K,V> implements SimpleDictionary<K,V> {
                     current = current.next;
                 }
             }
-        }catch (NullPointerException e) {
+        } catch (NullPointerException e) {
             System.out.println("Key cannot be null");
         } catch (Exception e) {
             System.out.println("Element could not be removed");
@@ -93,9 +105,10 @@ public class SimpleLinkedDictionary<K,V> implements SimpleDictionary<K,V> {
         return false;
     }
 
+    // Recorre la lista buscando un nodo con la clave dada
     @Override
     public boolean containsKey(K key) {
-        try{
+        try {
             Node current = head;
             while (current != null) {
                 if (current.key.equals(key)) {
@@ -111,9 +124,10 @@ public class SimpleLinkedDictionary<K,V> implements SimpleDictionary<K,V> {
         return false;
     }
 
+    // Busca la clave y devuelve el valor del nodo correspondiente
     @Override
     public V get(K key) {
-        try{
+        try {
             Node current = head;
             while (current != null) {
                 if (current.key.equals(key)) {
@@ -129,6 +143,7 @@ public class SimpleLinkedDictionary<K,V> implements SimpleDictionary<K,V> {
         return null;
     }
 
+    // Recorre la lista y copia todas las claves a una nueva lista
     @Override
     public SImpleList<K> keys() {
         SImpleList<K> result = new SimpleArrayList<K>(size);
@@ -140,11 +155,11 @@ public class SimpleLinkedDictionary<K,V> implements SimpleDictionary<K,V> {
         return result;
     }
 
+    // Recorre la lista y copia todos los valores a una nueva lista
     @Override
     public SImpleList<V> values() {
         SImpleList<V> result = new SimpleArrayList<V>(size);
         Node current = head;
-
         while (current != null) {
             result.add(current.value);
             current = current.next;
@@ -162,11 +177,11 @@ public class SimpleLinkedDictionary<K,V> implements SimpleDictionary<K,V> {
         return size == 0;
     }
 
+    // Desconecta todos los nodos
     @Override
     public void clear() {
         head = null;
         tail = null;
         size = 0;
     }
-
 }

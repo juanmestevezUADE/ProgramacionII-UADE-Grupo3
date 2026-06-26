@@ -72,7 +72,7 @@ public class SetExercise extends Exercise {
                         System.out.println("Invalid choice. Please enter 'as' or 'ls'.");
                         choice = scanner.nextLine();
                     }
-                    if (choice.equals("aq")) {
+                    if (choice.equals("as")) {
                         setA = new SimpleArraySet<>();
                         setB = new SimpleArraySet<>();
                     } else {
